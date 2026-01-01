@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import WebcamView from "@/components/WebcamView";
 
-// --- DATA TEMA EMOJI ---
 const THEMES = {
   classic: {
     label: "Classic 😐",
