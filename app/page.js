@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import WebcamView from "@/components/WebcamView";
-//tema clasic
+
 const THEMES = {
   classic: {
     label: "Classic 😐",
