@@ -98,7 +98,7 @@ export default function Home() {
           <h1 className="text-sm font-bold tracking-widest opacity-70">EMOTION UI</h1>
         </div>
         <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
-           <a href="https://sociabuzz.com/rezaaplvv" target="_blank" rel="noopener noreferrer"
+           <a href="https://sociabuzz.com/zeronaut/tribe" target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] md:text-xs font-bold text-red-400 hover:bg-red-500/20 transition-all uppercase tracking-tighter">
               <span className="animate-pulse">❤️</span> Donate
            </a>
