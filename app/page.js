@@ -64,11 +64,11 @@ export default function Home() {
   }, [emotion]);
 
   const creativeData = {
-    happy: { playlistUrl: "#", playlistLabel: "Putar Lagu Happy 🎵" },
-    sad: { playlistUrl: "#", playlistLabel: "Temani Aku Galau 🥀" },
-    angry: { playlistUrl: "#", playlistLabel: "Lepaskan Emosi 🎸" },
-    surprised: { playlistUrl: "#", playlistLabel: "Party Vibes 🎉" },
-    neutral: { playlistUrl: "#", playlistLabel: "Chill Mode ☕" }
+    happy: { playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DXdPec7aLTmlC", playlistLabel: "Putar Lagu Happy 🎵" },
+    sad: { playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DWTwvXSt53CGR", playlistLabel: "Temani Aku Galau 🥀" },
+    angry: { playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DX6tQ6a39u6a4", playlistLabel: "Lepaskan Emosi 🎸" },
+    surprised: { playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DX0Uv9tZ47pWo", playlistLabel: "Party Vibes 🎉" },
+    neutral: { playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DXdxcBWuJkbcy", playlistLabel: "Chill Mode ☕" }
   };
   const currentData = creativeData[emotion.toLowerCase()] || creativeData.neutral;
 
@@ -102,26 +102,20 @@ export default function Home() {
         }
       `}</style>
 
+      {/* PARTIKEL ADA DI Z-20 */}
       <ParticleOverlay type={emotion} />
       <div className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${currentVibe.overlay}`} />
 
-      {/* NAVBAR: TRANSPARENT & FLOATING */}
+      {/* NAVBAR */}
       <nav className="absolute top-0 w-full z-50 px-6 py-6 flex items-center justify-between pointer-events-none">
         <div className="flex items-center gap-2 pointer-events-auto">
           <div className="w-2 h-6 bg-white/40 rounded-full"></div>
           <h1 className="text-sm font-bold tracking-widest opacity-70">EMOTION UI</h1>
-
-
-
-
-
         </div>
         
-        {/* BAGIAN SOSIAL MEDIA & DONATE */}
         <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
-           {/* Tombol Donate Baru */}
            <a 
-              href="https://sociabuzz.com/rezaaplvv" 
+              href="https://sociabuzz.com/zeronaut/tribe" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] md:text-xs font-bold text-red-400 hover:bg-red-500/20 transition-all uppercase tracking-tighter"
@@ -133,7 +127,8 @@ export default function Home() {
         </div>
       </nav>
 
-      <div className={`flex-1 flex flex-col items-center justify-center gap-4 md:gap-8 px-4 relative z-10 ${isAngry ? 'animate-vibe-shake' : ''}`}>
+      {/* --- FIX UTAMA: UBAH z-10 JADI z-30 AGAR TOMBOL BISA DIKLIK --- */}
+      <div className={`flex-1 flex flex-col items-center justify-center gap-4 md:gap-8 px-4 relative z-30 ${isAngry ? 'animate-vibe-shake' : ''}`}>
         
         <div className="text-center space-y-2 md:space-y-4">
           <h2 className="text-2xl md:text-4xl font-black tracking-tighter uppercase italic">
@@ -164,7 +159,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          <a href={currentData.playlistUrl} className={`flex items-center gap-3 px-5 py-2 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all scale-90 md:scale-100 ${currentVibe.textInfo.color.replace('text-', 'hover:border-')}`}>
+          <a href={currentData.playlistUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 px-5 py-2 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all scale-90 md:scale-100 ${currentVibe.textInfo.color.replace('text-', 'hover:border-')}`}>
             <div className="text-green-400"><SpotifyIcon /></div>
             <div className="text-left">
               <p className="text-[10px] opacity-50 uppercase font-bold">Recommended</p>

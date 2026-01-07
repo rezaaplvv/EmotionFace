@@ -27,44 +27,65 @@ export default function WebcamView({ onEmotionDetected }) {
     loadModels();
   }, []);
 
-  // 2. Start Camera kalau model sudah siap
+  // 2. Start Camera dengan FIX IPHONE
   useEffect(() => {
     if (modelsLoaded) {
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ 
+          video: { 
+            facingMode: "user", // Memastikan kamera depan
+          } 
+        })
         .then((stream) => {
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
+            
+            // --- FIX IPHONE: Paksa Play ---
+            videoRef.current.onloadedmetadata = () => {
+              videoRef.current.play().catch(e => console.error("Play error:", e));
+            };
+            
             setIsReady(true);
           }
         })
-        .catch((err) => console.error("❌ Gagal kamera:", err));
+        .catch((err) => {
+            console.error("❌ Gagal kamera:", err);
+            // Fallback jika facingMode user gagal, coba default
+            if(err.name === "OverconstrainedError") {
+                 navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                    if(videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                        videoRef.current.onloadedmetadata = () => {
+                           videoRef.current.play();
+                        }
+                        setIsReady(true);
+                    }
+                 })
+            }
+        });
     }
   }, [modelsLoaded]);
 
   // 3. Loop Deteksi
   const handleVideoOnPlay = () => {
     setInterval(async () => {
-      if (videoRef.current && videoRef.current.readyState === 4) {
+      if (videoRef.current && videoRef.current.readyState === 4 && !videoRef.current.paused && !videoRef.current.ended) {
         const detections = await faceapi
           .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
           .withFaceExpressions();
 
         if (detections.length > 0) {
           const expressions = detections[0].expressions;
-          
-          // Cari ekspresi dengan nilai tertinggi
           const maxExpression = Object.keys(expressions).reduce((a, b) => 
             expressions[a] > expressions[b] ? a : b
           );
 
-          // 🔥 KIRIM DATA KE PARENT (Page.js)
           if (onEmotionDetected) {
             onEmotionDetected(maxExpression);
           }
         }
       }
-    }, 500); // Cek tiap 0.5 detik
+    }, 500); 
   };
 
   return (
@@ -82,6 +103,8 @@ export default function WebcamView({ onEmotionDetected }) {
         ref={videoRef}
         autoPlay
         muted
+        playsInline // WAJIB ADA UNTUK IPHONE
+        webkit-playsinline="true" // DUKUNGAN iOS LAMA
         onPlay={handleVideoOnPlay}
         width="720"
         height="560"
