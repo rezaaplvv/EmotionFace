@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "dev": "next dev",
+  "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
+  "start": "next start",
+  "lint": "next lint"
+},
   "dependencies": {
     "face-api.js": "^0.22.2",
     "next": "16.1.1",
