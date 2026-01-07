@@ -110,6 +110,11 @@ export default function Home() {
         <div className="flex items-center gap-2 pointer-events-auto">
           <div className="w-2 h-6 bg-white/40 rounded-full"></div>
           <h1 className="text-sm font-bold tracking-widest opacity-70">EMOTION UI</h1>
+
+
+
+
+
         </div>
         
         {/* BAGIAN SOSIAL MEDIA & DONATE */}
