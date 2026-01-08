@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Emotion UI - AI Vibe Detector
 
-## Getting Started
+Emotion UI adalah aplikasi berbasis web yang memanfaatkan teknologi kecerdasan buatan (AI) untuk mendeteksi ekspresi wajah pengguna secara real-time. Proyek ini dirancang untuk menciptakan antarmuka yang dinamis dan interaktif, di mana elemen visual aplikasi bereaksi langsung terhadap emosi yang terdeteksi.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Demo Tampilan
+![Demo Web](./demoweb.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Fitur Utama
+* **Deteksi Emosi Real-time**: Menggunakan library face-api.js untuk mengidentifikasi ekspresi wajah seperti bahagia, sedih, marah, terkejut, dan netral.
+* **Sistem Antarmuka Dinamis**: Skema warna, latar belakang gradient, dan efek partikel berubah secara otomatis sesuai dengan emosi pengguna.
+* **Kutipan Kontekstual**: Menyediakan pesan teks atau kutipan yang disesuaikan dengan suasana hati yang terdeteksi.
+* **Tema Kustom**: Pengguna dapat memilih berbagai paket tema visual seperti tema Anime, K-Pop, dan 8-Bit Pixel.
+* **Tantangan Harian**: Fitur interaktif yang memberikan misi tertentu kepada pengguna untuk mendapatkan respon khusus dari sistem.
+* **Rekomendasi Playlist**: Integrasi saran daftar putar musik yang disesuaikan dengan emosi saat ini.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Teknologi yang Digunakan
+* **Framework**: Next.js 15
+* **Styling**: Tailwind CSS 4
+* **AI Library**: face-api.js
+* **Deployment**: Vercel
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Cara Menjalankan Secara Lokal
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  **Clone repositori ini**:
+    ```bash
+    git clone [https://github.com/rezaaplvv/EmotionFace.git](https://github.com/rezaaplvv/EmotionFace.git)
+    cd EmotionFace
+    ```
 
-## Deploy on Vercel
+2.  **Instal dependensi**:
+    ```bash
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3.  **Jalankan server pengembangan**:
+    ```bash
+    npm run dev
+    ```
+    Buka http://localhost:3000 di browser Anda.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Struktur Folder
+* **/app**: Berisi logika utama halaman dan pengelolaan status emosi.
+* **/components**: Berisi komponen fungsional seperti WebcamView.jsx.
+* **/public/models**: Berisi file model AI yang diperlukan untuk proses deteksi wajah.
+
+---
+
+## Kontribusi
+Proyek ini terbuka untuk kontribusi. Jika Anda menemukan bug atau ingin menambahkan fitur baru, silakan ajukan Pull Request atau buka Issue di repositori ini.
+
+---
+
+## Dukungan
+Jika proyek ini bermanfaat bagi Anda, dukungan dapat diberikan melalui platform SociaBuzz pada profil rezaaplvv.
+
+Dibuat oleh rezaaplvv
