@@ -3,59 +3,95 @@
 import { useState, useEffect } from "react";
 import WebcamView from "@/components/WebcamView";
 
-// --- KOMPONEN: SUPER DENSE PARTICLES ---
-const ParticleOverlay = ({ type }) => {
-  if (!type) return null;
-  let particles = [];
-  let count = 50; 
+// --- DATA TEMA EMOJI ---
+const THEMES = {
+  classic: {
+    label: "Classic 😐",
+    emojis: {
+      happy: ["😄", "✨", "🎉", "💛", "🔥", "🌈"],
+      sad: ["💧", "🌧️", "💔", "🌫️", "🥀", "☁️"],
+      angry: ["🔥", "💢", "🤬", "💥", "⚡", "👹"],
+      surprised: ["😲", "❗", "⚡", "👀", "🌌", "🛸"],
+      neutral: [],
+    }
+  },
+  anime: {
+    label: "Anime 🌸",
+    emojis: {
+      happy: ["🌸", "✨", "😻", "🍡", "💖", "uwu"],
+      sad: ["💔", "🥀", "☔", "😿", "🌪️"],
+      angry: ["💢", "😤", "🔥", "⚔️", "😈"],
+      surprised: ["⁉️", "⚡", "✨", "😱", "💫"],
+      neutral: ["💤", "...", "🎐"],
+    }
+  },
+  kpop: {
+    label: "K-Pop 💜",
+    emojis: {
+      happy: ["🫰", "💜", "🎤", "🕺", "✨", "🍭"],
+      sad: ["🥀", "🌧️", "💧", "🩹", "🎼"],
+      angry: ["🔥", "📢", "💣", "💔", "🕶️"],
+      surprised: ["✨", "🤩", "📸", "💎", "😲"],
+      neutral: ["🎧", "☁️", "🤍"],
+    }
+  },
+  pixel: {
+    label: "8-Bit 👾",
+    emojis: {
+      happy: ["👾", "⭐", "🍄", "💎", "🆙"],
+      sad: ["💀", "🪦", "📉", "⛈️", "💧"],
+      angry: ["💣", "🧨", "💥", "🕹️", "🤬"],
+      surprised: ["❗", "❓", "⚡", "💾", "👀"],
+      neutral: ["💾", "📼", "⬛"],
+    }
+  }
+};
 
-  const emojis = {
-    happy: ["😄", "✨", "🎉", "💛", "🔥", "🌈", "🍭"],
-    sad: ["💧", "🌧️", "💔", "🌫️", "🥀", "☁️", "🧊"],
-    angry: ["🔥", "💢", "🤬", "💥", "⚡", "🧨", "👹"],
-    surprised: ["😲", "❗", "⚡", "👀", "🌌", "☄️", "🛸"],
-    neutral: [],
-  };
+// --- KOMPONEN PARTIKEL (Dinamis sesuai Tema) ---
+const ParticleOverlay = ({ emotion, currentTheme }) => {
+  if (!emotion) return null;
+  
+  const count = 40; 
+  // Ambil emoji berdasarkan tema yang dipilih
+  const themeData = THEMES[currentTheme] || THEMES.classic;
+  const selectedEmojis = themeData.emojis[emotion.toLowerCase()] || [];
 
-  const selectedEmojis = emojis[type.toLowerCase()] || [];
   if (selectedEmojis.length === 0) return null;
 
-  for (let i = 0; i < count; i++) {
-    const randomEmoji = selectedEmojis[Math.floor(Math.random() * selectedEmojis.length)];
-    const left = Math.floor(Math.random() * 100) + "%";
-    const delay = Math.random() * 8 + "s";
-    const duration = Math.random() * 4 + 2 + "s"; 
-    const size = Math.random() * 15 + 15 + "px";
-
-    particles.push(
-      <div
-        key={i}
-        className="absolute top-[-10%] animate-fall select-none"
-        style={{
-          left: left,
-          animationDelay: delay,
-          animationDuration: duration,
-          fontSize: size,
-          opacity: 0.6,
-        }}
-      >
-        {randomEmoji}
-      </div>
-    );
-  }
-  return <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">{particles}</div>;
+  return (
+    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+      {Array.from({ length: count }).map((_, i) => (
+        <div 
+          key={i} 
+          className="absolute top-[-10%] animate-fall select-none"
+          style={{
+            left: Math.floor(Math.random() * 100) + "%",
+            animationDelay: Math.random() * 5 + "s",
+            animationDuration: Math.random() * 3 + 3 + "s",
+            fontSize: Math.random() * 20 + 15 + "px",
+            opacity: 0.7,
+            textShadow: "0 0 10px rgba(255,255,255,0.5)"
+          }}
+        >
+          {selectedEmojis[Math.floor(Math.random() * selectedEmojis.length)]}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default function Home() {
   const [emotion, setEmotion] = useState("Neutral");
   const [randomQuote, setRandomQuote] = useState("");
+  // State untuk menyimpan tema yang dipilih (Default: classic)
+  const [currentTheme, setCurrentTheme] = useState("classic");
 
   const quotesData = {
-    happy: ["Lebar amat tuh senyum, Hutang jangan lupa dibayar ya!", "Bau-bau habis dapet transferan nih, ya kan?", "Mode senang: ON. Mode waras: Coming Soon.", "Senyummu mengandung gula, pantesan semut pada ngumpul."],
-    sad: ["Tenang, habis gelap terbitlah paket kurir depan rumah.", "Sedih boleh, tapi jangan lupa makan seblak.", "Jangan nangis, nanti maskaranya luntur jadi mirip rakun.", "Hati boleh kosong, yang penting keranjang oren jangan kosong."],
-    angry: ["Lagi mode 'Senggol Bacok', mending aku diem aja deh.", "Waduh, tensi naik! Awas monitornya pecah!", "Awas meledak! Jangan lupa tombol Self Destruct dipencet.", "Mode Reog: Activated. Tolong jauhkan benda tajam."],
-    surprised: ["Oomagaaa! 😲", "Hah? Gimana? Katanya diet tapi kok beli boba?", "Plot twist kehidupan emang kadang suka bikin jantungan.", "Muka kagetnya dapet banget, bisa jadi meme viral nih."],
-    neutral: ["Si Monyet Lagi Diem.", "Mode NPC: ON. Menunggu instruksi selanjutnya.", "Muka flat banget kayak jalanan baru diaspal.", "Lagi meditasi apa lagi bengong mikirin cicilan?"]
+    happy: ["Lebar amat tuh senyum, Hutang jangan lupa dibayar ya!", "Bau-bau habis dapet transferan nih.", "Senyummu mengandung gula, awas diabetes."],
+    sad: ["Tenang, habis gelap terbitlah paket kurir.", "Sedih boleh, tapi jangan lupa makan seblak.", "Jangan nangis, nanti maskaranya luntur."],
+    angry: ["Mode 'Senggol Bacok': ON.", "Awas meledak! Jauhkan benda tajam.", "Sabar, tarik napas... tahan... jangan dibuang sayang."],
+    surprised: ["Oomagaaa! 😲", "Plot twist kehidupan emang suka bikin jantungan.", "Muka kagetnya dapet banget, calon meme viral."],
+    neutral: ["Si Monyet Lagi Diem.", "Mode NPC: ON. Menunggu instruksi.", "Lagi meditasi apa lagi bengong mikirin cicilan?"]
   };
 
   useEffect(() => {
@@ -89,21 +125,12 @@ export default function Home() {
       <style jsx global>{`
         @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
         .animate-fall { animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite; }
-        @keyframes glitch-smooth {
-          0% { transform: translate(0); }
-          25% { transform: translate(-1px, 1px); }
-          50% { transform: translate(1px, -1px); }
-          75% { transform: translate(-1px, -1px); }
-          100% { transform: translate(0); }
-        }
-        .animate-vibe-shake {
-          animation: glitch-smooth 0.1s ease-in-out infinite;
-          will-change: transform;
-        }
+        @keyframes glitch-smooth { 0% { transform: translate(0); } 25% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } 100% { transform: translate(0); } }
+        .animate-vibe-shake { animation: glitch-smooth 0.1s ease-in-out infinite; will-change: transform; }
       `}</style>
 
-      {/* PARTIKEL ADA DI Z-20 */}
-      <ParticleOverlay type={emotion} />
+      {/* Partikel Dinamis (Props: emotion & currentTheme) */}
+      <ParticleOverlay emotion={emotion} currentTheme={currentTheme} />
       <div className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${currentVibe.overlay}`} />
 
       {/* NAVBAR */}
@@ -114,20 +141,34 @@ export default function Home() {
         </div>
         
         <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
+           {/* THEME SELECTOR (DROPDOWN/BUTTONS) */}
+           <div className="flex gap-1 bg-black/30 backdrop-blur-md p-1 rounded-full border border-white/10">
+              {Object.keys(THEMES).map((themeKey) => (
+                <button
+                  key={themeKey}
+                  onClick={() => setCurrentTheme(themeKey)}
+                  className={`text-[10px] md:text-xs px-2 py-1 rounded-full transition-all ${
+                    currentTheme === themeKey 
+                      ? "bg-white text-black font-bold shadow-[0_0_10px_rgba(255,255,255,0.5)]" 
+                      : "text-white/50 hover:text-white"
+                  }`}
+                >
+                  {THEMES[themeKey].label.split(" ")[1]} {/* Ambil iconnya saja biar rapi di HP */}
+                </button>
+              ))}
+           </div>
+
            <a 
               href="https://sociabuzz.com/zeronaut/tribe" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] md:text-xs font-bold text-red-400 hover:bg-red-500/20 transition-all uppercase tracking-tighter"
            >
-              <span className="animate-pulse">❤️</span> Donate
+              Donate
            </a>
-           <SocialLink href="https://github.com/rezaaplvv" icon={<GithubIcon />} />
-           <SocialLink href="https://instagram.com/rezaaplvv" icon={<InstagramIcon />} />
         </div>
       </nav>
 
-      {/* --- FIX UTAMA: UBAH z-10 JADI z-30 AGAR TOMBOL BISA DIKLIK --- */}
       <div className={`flex-1 flex flex-col items-center justify-center gap-4 md:gap-8 px-4 relative z-30 ${isAngry ? 'animate-vibe-shake' : ''}`}>
         
         <div className="text-center space-y-2 md:space-y-4">
@@ -141,6 +182,12 @@ export default function Home() {
                   {emotion}
                </span>
             </div>
+            
+            {/* Tampilkan Nama Tema yang Sedang Aktif */}
+            <p className="text-[10px] uppercase tracking-widest opacity-40">
+              Theme: {THEMES[currentTheme].label}
+            </p>
+
             <div className="h-6 flex items-center justify-center px-4">
               <p className={`text-sm md:text-lg font-medium italic opacity-80 text-center ${currentVibe.textInfo.color}`}>
                 "{randomQuote}"
