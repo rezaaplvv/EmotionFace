@@ -47,7 +47,6 @@ const THEMES = {
   }
 };
 
-// --- KOMPONEN PARTIKEL (Dinamis sesuai Tema) ---
 const ParticleOverlay = ({ emotion, currentTheme }) => {
   if (!emotion) return null;
   
