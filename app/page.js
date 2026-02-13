@@ -52,7 +52,6 @@ const ParticleOverlay = ({ emotion, currentTheme }) => {
   if (!emotion) return null;
   
   const count = 40; 
-  // Ambil emoji berdasarkan tema yang dipilih
   const themeData = THEMES[currentTheme] || THEMES.classic;
   const selectedEmojis = themeData.emojis[emotion.toLowerCase()] || [];
 
