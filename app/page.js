@@ -129,7 +129,6 @@ export default function Home() {
         .animate-vibe-shake { animation: glitch-smooth 0.1s ease-in-out infinite; will-change: transform; }
       `}</style>
 
-      {/* Partikel Dinamis (Props: emotion & currentTheme) */}
       <ParticleOverlay emotion={emotion} currentTheme={currentTheme} />
       <div className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${currentVibe.overlay}`} />
 
