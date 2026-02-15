@@ -183,7 +183,6 @@ export default function Home() {
                </span>
             </div>
             
-            {/* Tampilkan Nama Tema yang Sedang Aktif */}
             <p className="text-[10px] uppercase tracking-widest opacity-40">
               Theme: {THEMES[currentTheme].label}
             </p>
