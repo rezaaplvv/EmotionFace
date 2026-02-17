@@ -137,7 +137,6 @@ export default function Home() {
         </div>
         
         <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
-           {/* THEME SELECTOR (DROPDOWN/BUTTONS) */}
            <div className="flex gap-1 bg-black/30 backdrop-blur-md p-1 rounded-full border border-white/10">
               {Object.keys(THEMES).map((themeKey) => (
                 <button
